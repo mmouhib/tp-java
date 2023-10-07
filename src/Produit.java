@@ -88,9 +88,7 @@ public class Produit {
 
     // 3.1.B
     public Boolean comparer(Produit p1, Produit p2) {
-
         return (p1.id == p2.id && p1.libelle.equals(p2.libelle) && Objects.equals(p1.prix, p2.prix));
-
     }
 
 }

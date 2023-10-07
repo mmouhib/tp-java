@@ -63,61 +63,52 @@ public class Magasin {
 
 
     //3.2
-
     public Boolean search(Produit p) {
 
-        for (int i = 0; i < this.capacite; i++) {
-
-            if (this.produits[i] != null) {
-                if (p.getId() == produits[i].getId()
-                        && p.getLibelle().equals(produits[i].getLibelle())
-                        && Objects.equals(p.getPrix(), produits[i].getPrix())) {
+        for (Produit prod : produits) {
+            if (prod != null) {
+                if (p.getId() == prod.getId()
+                        && p.getLibelle().equals(prod.getLibelle())
+                        && Objects.equals(p.getPrix(), prod.getPrix())
+                ) {
                     return true;
                 }
-
             }
         }
         return false;
     }
 
+
+    private int getIndex(Produit p) {
+        if (search(p)) {
+            for (int i = 0; i < this.capacite; i++) {
+                if (produits[i].equals(p))
+                    return i;
+            }
+        }
+        return -1;
+    }
+
     //3.4
     public Boolean delete(Produit p) {
-
-        if (!this.search(p)) {
-            return false;
-        } else {
-            for (int i = 0; i < this.capacite; i++) {
-
-                if (this.produits[i] != null) {
-                    if (p.getId() == produits[i].getId()
-                            && p.getLibelle().equals(produits[i].getLibelle())
-                            && Objects.equals(p.getPrix(), produits[i].getPrix())) {
-                        this.produits[i] = null;
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
+        int index = getIndex(p);
+        if (index == -1) return false;
+        produits[index] = null;
+        return true;
     }
 
 
     //3.5
     public Magasin supNb(Magasin m1, Magasin m2) {
-
-
         int nbProdM1 = 0;
         int nbProdM2 = 0;
-
         for (int i = 0; i < m1.capacite; i++) {
-
             if (m1.produits[i] != null) {
                 nbProdM1++;
             }
         }
 
         for (int i = 0; i < m2.capacite; i++) {
-
             if (m2.produits[i] != null) {
                 nbProdM2++;
             }
@@ -128,7 +119,6 @@ public class Magasin {
         } else {
             return m2;
         }
-
     }
 
 
