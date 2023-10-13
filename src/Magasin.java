@@ -1,16 +1,19 @@
 import java.util.Objects;
 
 public class Magasin {
-    private int id;
-    private String adresse;
-    private int capacite;
+    private int id, capacite;
+    private String adresse, nom;
     private Produit[] produits;
+    private Personne[] employees;
 
-    public Magasin(int id, String adresse, int capacite, Produit[] prods) {
+    public Magasin(int id, String adresse, int capacite, String nom, Produit[] prods, Personne[] employees) {
+
         this.id = id;
         this.adresse = adresse;
         this.capacite = capacite;
+        this.nom = nom;
         this.produits = prods;
+        this.employees = employees;
     }
 
     public int getId() {
@@ -55,8 +58,7 @@ public class Magasin {
     int nbProds() {
         int nb = 0;
         for (Produit p : produits) {
-            if (p.getLibelle() != null)
-                nb++;
+            if (p.getLibelle() != null) nb++;
         }
         return nb;
     }
@@ -67,10 +69,7 @@ public class Magasin {
 
         for (Produit prod : produits) {
             if (prod != null) {
-                if (p.getId() == prod.getId()
-                        && p.getLibelle().equals(prod.getLibelle())
-                        && Objects.equals(p.getPrix(), prod.getPrix())
-                ) {
+                if (p.getId() == prod.getId() && p.getLibelle().equals(prod.getLibelle()) && Objects.equals(p.getPrix(), prod.getPrix())) {
                     return true;
                 }
             }
@@ -82,22 +81,25 @@ public class Magasin {
     private int getIndex(Produit p) {
         if (search(p)) {
             for (int i = 0; i < this.capacite; i++) {
-                if (produits[i].equals(p))
-                    return i;
+                if (produits[i].equals(p)) return i;
             }
         }
         return -1;
     }
 
     //3.4
-    public Boolean delete(Produit p) {
+    public void delete(Produit p) {
         int index = getIndex(p);
-        if (index == -1) return false;
-        produits[index] = null;
-        return true;
+        if (index != -1 && index > this.capacite - 1) {
+            for (int i = index; i < this.capacite - 1; i++) {
+                produits[i] = produits[i + 1];
+            }
+        }
+        //to be completed
+        this.capacite -= 1;
     }
 
-
+    
     //3.5
     public Magasin supNb(Magasin m1, Magasin m2) {
         int nbProdM1 = 0;
@@ -124,21 +126,30 @@ public class Magasin {
 
     public Boolean addProduct(Produit p) {
 
-        if (this.search(p)) {
-            return false;
-        } else {
-
+        if (!this.search(p)) {
             for (int i = 0; i < this.capacite; i++) {
-
                 if (this.produits[i] == null) {
                     this.produits[i] = p;
                     return true;
                 }
             }
-            return false;
         }
-
+        return false;
     }
 
+    public Personne[] getEmployees() {
+        return employees;
+    }
 
+    public void setEmployees(Personne[] employees) {
+        this.employees = employees;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 }
