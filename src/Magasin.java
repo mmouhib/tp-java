@@ -99,7 +99,7 @@ public class Magasin {
         this.capacite -= 1;
     }
 
-    
+
     //3.5
     public Magasin supNb(Magasin m1, Magasin m2) {
         int nbProdM1 = 0;
@@ -151,5 +151,19 @@ public class Magasin {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public float calculStock() {
+        float stock = 0;
+        for (Produit p : this.produits) {
+            if (p instanceof Fruit) {
+                Fruit f = (Fruit) p;
+                stock += f.getQte();
+            } else if (p instanceof Legume) {
+                Legume l = (Legume) p;
+                stock += l.getQte();
+            }
+        }
+        return stock;
     }
 }
