@@ -2,7 +2,7 @@ package maps;
 
 import java.util.Objects;
 
-public class Employe {
+public class Employe implements  Comparable<Employe>{
     int cin, matricule;
     String nom,prenom;
 
@@ -71,5 +71,11 @@ public class Employe {
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 '}';
+    }
+
+
+    public int compareTo (Employe e){
+        return this.cin - e.cin;
+        // return this.nom.compareTo(e.getNom());
     }
 }
